@@ -9,7 +9,7 @@ const businessCardSchema = new mongoose.Schema({
         handleName:String,
         handleLink:String
     }],
-    interest:[string]
+    interest:[String]
 })
 
 const businessCard = mongoose.model('businessCards',businessCardSchema)
