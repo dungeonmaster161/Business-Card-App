@@ -19,10 +19,12 @@ app.get('/businessCards',async (req,res)=>{
 //Add business card
 app.post('/addBusinessCard',(req,res)=>{
     const createPayload = req.body
+    console.log(createPayload);
     const parsePayload = createBusinessCard.safeParse(createPayload)
     if(!parsePayload.success){
         res.status(411).json({
-            msg:"Invalid input"
+            msg:"Invalid input",
+            error:parsePayload
         })
         return
     }
