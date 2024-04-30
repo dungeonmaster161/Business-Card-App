@@ -17,7 +17,7 @@ app.get('/businessCards',async (req,res)=>{
 })
 
 //Add business card
-app.post('/addBusinessCard',(req,res)=>{
+app.post('/addBusinessCard',async (req,res)=>{
     const createPayload = req.body
     console.log(createPayload);
     const parsePayload = createBusinessCard.safeParse(createPayload)
@@ -28,14 +28,35 @@ app.post('/addBusinessCard',(req,res)=>{
         })
         return
     }
+    const createBusinessCard = await businessCard.create(req.body)
     res.status(200).json({
         msg:"Card is created"
     })
 })
 
 //Update business card
-app.put('/updateBusinessCard',(req,res)=>{
+app.put('/updateBusinessCard',async (req,res)=>{
+    const updatePayLoad = req.body
+    const parsePayload = createBusinessCard.safeParse(updatePayLoad)
+    if(!parsePayload.success){
+        res.status(411).json({
+            msg:"Invalid input",
+            error:parsePayload
+        })
+        return
+    }
+    const updateBusinessCard = await businessCard.findOneAndUpdate({_id:updatePayLoad.id},req.body)
+    res.status(204).json({
+        msg:"Card is updated"
+    })
+})
 
+app.delete('/deleteBusinessCard',async (req,res)=>{
+    const deletePayLoad = req.body
+    const deleteBusinessCard = await businessCard.findOneAndDelete({_id:deletePayLoad.id})
+    res.status(200).json({
+        msg:"Card is deleted"
+    })
 })
 
 app.listen(8080,()=>{
