@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaPlus } from "react-icons/fa";
+import BusinessCards from './BusinessCards';
 
-export default function BusinessCard() {
+export default function CreateBusinessCard(props) {
   const [name,setName] = useState()
   const [description,setDescription] = useState()
   const [socialMedia,setSocialMedia] = useState([{
@@ -9,6 +10,9 @@ export default function BusinessCard() {
     socialMediaHandle:''
   }])
   const [interests,setInterests] = useState([''])
+  const [businessCards,setBusinessCards] = useState([])
+
+
 
   function addSocialMediaHandleButton(){
     setSocialMedia([...socialMedia,{
@@ -54,22 +58,8 @@ export default function BusinessCard() {
         socialMedia.map((data,index)=>{
           return(
             <div inedx={index}>
-              <input type='text'  placeholder='Social Media Name'  onChange={(e)=>handleSocialMediaChange(e,index,'handleName')}
-                
-                // console.log(index);
-                // let value = socialMedia
-                // // value[i].socialMediaName = e.target.value
-                // console.log('Value Social media name', value[i].socialMediaName);
-                // setSocialMedia(value)
-               /> &nbsp;
-              <input type='text' placeholder='Social Media Link' onChange={(e)=>handleSocialMediaChange(e,index,'handleLink')}
-                // console.log(index);
-                // let value = socialMedia
-                // value[i].socialMediaHandle = e.target.value
-                // console.log('value social media handle',value);
-                // setSocialMedia(value)
-              
-               />
+              <input type='text'  placeholder='Social Media Name'  onChange={(e)=>handleSocialMediaChange(e,index,'handleName')} /> &nbsp;
+              <input type='text' placeholder='Social Media Link' onChange={(e)=>handleSocialMediaChange(e,index,'handleLink')} />
             </div>
           )
         })
@@ -98,8 +88,18 @@ export default function BusinessCard() {
           }
         })
         .then(async function(res){
-          const json  = res.json()
+          const json  = await res.json()
+          if(!json.success){
+            alert("data not added")
+            return
+          }
           alert("data added")
+          props.setBusinessData([...props.businessData,{
+            name:name,
+            description:description,
+            socialMedia:socialMedia,
+            interests:interests
+          }])
         })
       }}>Create business card</button>
     </div>

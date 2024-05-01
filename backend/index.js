@@ -19,7 +19,6 @@ app.get('/businessCards',async (req,res)=>{
 //Add business card
 app.post('/addBusinessCard',async (req,res)=>{
     const createPayload = req.body
-    console.log(createPayload);
     const parsePayload = createBusinessCard.safeParse(createPayload)
     if(!parsePayload.success){
         res.status(411).json({
@@ -30,7 +29,8 @@ app.post('/addBusinessCard',async (req,res)=>{
     }
     const addBusinessCard = await businessCard.create(req.body)
     res.status(200).json({
-        msg:"Card is created"
+        msg:"Card is created",
+        success:true
     })
 })
 
