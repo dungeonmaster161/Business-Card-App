@@ -28,7 +28,7 @@ app.post('/addBusinessCard',async (req,res)=>{
         })
         return
     }
-    const createBusinessCard = await businessCard.create(req.body)
+    const addBusinessCard = await businessCard.create(req.body)
     res.status(200).json({
         msg:"Card is created"
     })

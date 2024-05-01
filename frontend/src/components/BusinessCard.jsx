@@ -12,13 +12,33 @@ export default function BusinessCard() {
 
   function addSocialMediaHandleButton(){
     setSocialMedia([...socialMedia,{
-      socialMediaName:'',
-      socialMediaHandle:''
+      handleName:'',
+      handleLink:''
     }])
   }
 
   function addInterestsHandleButton(){
     setInterests([...interests,''])
+  }
+
+  function handleSocialMediaChange(e,index,objectName){
+    console.log(`
+    Event value ${e.target.value}
+
+    Index value ${index}
+
+    Object Name ${objectName}
+    `);
+    let value = socialMedia
+    value[index][objectName] = e.target.value
+    // console.log('Value Social media name', value[i].socialMediaName);
+    setSocialMedia(value)
+  }
+
+  function handleInterest(e,index){
+    let value = interests
+    value[index] = e.target.value
+    setInterests(value)
   }
   return (
     <div>
@@ -33,43 +53,54 @@ export default function BusinessCard() {
       {
         socialMedia.map((data,index)=>{
           return(
-            <div>
-              <input type='text'  placeholder='Social Media Name'  onChange={(e,index)=>{
-               
+            <div inedx={index}>
+              <input type='text'  placeholder='Social Media Name'  onChange={(e)=>handleSocialMediaChange(e,index,'handleName')}
+                
                 // console.log(index);
                 // let value = socialMedia
                 // // value[i].socialMediaName = e.target.value
                 // console.log('Value Social media name', value[i].socialMediaName);
                 // setSocialMedia(value)
-              }} /> &nbsp;
-              <input type='text' placeholder='Social Media Link' onChange={(e,index)=>{
+               /> &nbsp;
+              <input type='text' placeholder='Social Media Link' onChange={(e)=>handleSocialMediaChange(e,index,'handleLink')}
                 // console.log(index);
                 // let value = socialMedia
                 // value[i].socialMediaHandle = e.target.value
                 // console.log('value social media handle',value);
                 // setSocialMedia(value)
-              }} />
+              
+               />
             </div>
           )
         })
        }<FaPlus onClick={addSocialMediaHandleButton}  /> <br />
        {
-        interests.map((i)=>{
+        interests.map((data,index)=>{
           return(
-            <span>
-              <input type='text'  placeholder='Enter interests' onChange={(e,i)=>{
-                let value = interests
-                value[i] = e.target.value
-                setInterests(value)
-              }}  /> 
+            <span index={index}>
+              <input type='text'  placeholder='Enter interests' onChange={(e)=>handleInterest(e,index)}  /> 
             </span>
           )
         })
        }
       <FaPlus onClick={addInterestsHandleButton} /> <br />
       <button onClick={()=>{
-        console.log('Social media',socialMedia);
-        console.log('Interests',interests);
+        fetch("http://localhost:8080/addBusinessCard",{
+          method:'POST',
+          body:JSON.stringify({
+            name:name,
+            description:description,
+            socialMedia:socialMedia,
+            interests:interests
+          }),
+          headers:{
+            "content-type":"application/json"
+          }
+        })
+        .then(async function(res){
+          const json  = res.json()
+          alert("data added")
+        })
       }}>Create business card</button>
     </div>
   )
