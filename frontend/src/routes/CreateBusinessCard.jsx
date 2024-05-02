@@ -26,13 +26,13 @@ export default function CreateBusinessCard(props) {
   }
 
   function handleSocialMediaChange(e,index,objectName){
-    console.log(`
-    Event value ${e.target.value}
+    // console.log(`
+    // Event value ${e.target.value}
 
-    Index value ${index}
+    // Index value ${index}
 
-    Object Name ${objectName}
-    `);
+    // Object Name ${objectName}
+    // `);
     let value = socialMedia
     value[index][objectName] = e.target.value
     // console.log('Value Social media name', value[i].socialMediaName);

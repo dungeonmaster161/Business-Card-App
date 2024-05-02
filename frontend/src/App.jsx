@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import CreateBusinessCard from './components/CreateBusinessCard'
-import BusinessCards from './components/BusinessCards'
+import CreateBusinessCard from './routes/CreateBusinessCard'
+import BusinessCards from './routes/BusinessCards'
 
 export default function App() {
   const [data,setData] = useState([])
@@ -8,7 +8,7 @@ export default function App() {
     fetch("http://localhost:8080/businessCards")
     .then(async function(res){
       const json = await res.json()
-      console.log("This is json+++++=>",json);
+      // console.log("This is json+++++=>",json);
       setData(json.data)
     })
   },[])
