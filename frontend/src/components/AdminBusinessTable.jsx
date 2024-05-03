@@ -5,6 +5,14 @@ export default function AdminBusinessTable({ cardData }) {
   const [inputAllow,setInputAllow] = useState()
   const [name,setName] = useState()
   const [description,setDescription] = useState()
+  const [socialMedia,setSocialMedia] = useState([{
+    handleName:'',
+    handleLink:''
+  }])
+  function handleSocialMedia(e,index,handle){
+    let value = e.target.value
+    socialMedia[index][handle] = value
+  }
   return (
     <table border={1}>
       <tr>
@@ -28,10 +36,10 @@ export default function AdminBusinessTable({ cardData }) {
                 return(
                   <>
                     <td>
-                      {data.handleName}
+                      { inputAllow != data._id ?  data.handleName : <input type='text' value={socialMedia[index].handleName} onChange={(e)=>handleSocialMedia(e,index,'handleName')} /> }
                     </td>
                     <td>
-                      {data.handleLink}
+                      {/* { inputAllow != data.id ?  data.handleLink : <input type='text' value={socialMedia[index].handleLink} onChange={(e)=>handleSocialMedia(e,index,'handleLink')} /> } */}
                     </td>
                   </>
                 )
@@ -49,8 +57,9 @@ export default function AdminBusinessTable({ cardData }) {
                 // fetch()
                 setInputAllow(data._id)
                 setName(data.name)
-                console.log(data.description,"data description");
                 setDescription(data.description)
+                // console.log('this is',da);
+                setSocialMedia([...socialMedia,data.socialMedia])
                 }}>Edit</button>
                 <button>Delete</button>
               </td>
