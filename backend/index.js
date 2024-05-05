@@ -45,9 +45,16 @@ app.put('/updateBusinessCard',async (req,res)=>{
         })
         return
     }
-    const updateBusinessCard = await businessCard.findOneAndUpdate({_id:updatePayLoad.id},req.body)
-    res.status(204).json({
-        msg:"Card is updated"
+    console.log(updatePayLoad," upadte payload");
+    try {
+        const updateBusinessCard = await businessCard.findOneAndUpdate({_id:updatePayLoad.id},updatePayLoad)
+    } catch (error) {
+        console.log(error);
+        return
+    }
+    res.status(200).json({
+        msg:"Card is updated",
+        success:true
     })
 })
 
