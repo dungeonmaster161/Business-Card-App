@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CreateBusinessCard from './routes/CreateBusinessCard'
 import BusinessCards from './routes/BusinessCards'
 
+//App component
 export default function App() {
   const [data,setData] = useState([])
   useEffect(()=>{
